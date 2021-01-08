@@ -1,0 +1,95 @@
+{
+  "list": [
+    {
+      "type": "form",
+      "name": "表单块",
+      "icon": "icon-grid-",
+      "columns": [
+        {
+          "list": [
+            {
+              "type": "grid",
+              "name": "栅格布局",
+              "icon": "icon-grid-",
+              "columns": [
+                {
+                  "span": 12,
+                  "list": [
+                    {
+                      "type": "input",
+                      "name": "单行文本",
+                      "icon": "icon-input",
+                      "options": {
+                        "width": "80%",
+                        "defaultValue": "",
+                        "required": false,
+                        "dataType": "string",
+                        "pattern": "",
+                        "placeholder": "",
+                        "disabled": false,
+                        "isWfCondition": false
+                      },
+                      "key": "1608779149000_82150",
+                      "model": "input_1608779149000_82150",
+                      "rules": [
+                        {
+                          "type": "string",
+                          "message": "单行文本格式不正确"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "span": 12,
+                  "list": [
+                    {
+                      "type": "input",
+                      "name": "单行文本",
+                      "icon": "icon-input",
+                      "options": {
+                        "width": "80%",
+                        "defaultValue": "",
+                        "required": false,
+                        "dataType": "string",
+                        "pattern": "",
+                        "placeholder": "",
+                        "disabled": false,
+                        "isWfCondition": false
+                      },
+                      "key": "1608779151000_49836",
+                      "model": "input_1608779151000_49836",
+                      "rules": []
+                    }
+                  ]
+                }
+              ],
+              "options": {
+                "gutter": 0,
+                "justify": "start",
+                "align": "top"
+              },
+              "key": "1608779144000_83111",
+              "model": "grid_1608779144000_83111",
+              "rules": []
+            }
+          ]
+        }
+      ],
+      "options": {
+        "gutter": 0,
+        "justify": "start",
+        "align": "top",
+        "height": "150"
+      },
+      "key": "1608779124000_92075",
+      "model": "form_1608779124000_92075",
+      "rules": []
+    }
+  ],
+  "config": {
+    "labelWidth": 100,
+    "labelPosition": "right",
+    "size": "small"
+  }
+}

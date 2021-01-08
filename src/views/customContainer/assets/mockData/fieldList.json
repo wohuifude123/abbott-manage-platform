@@ -1,0 +1,85 @@
+{
+  "code": "200",
+  "msg": "success",
+  "data": [
+    {
+      "name": "姓名",
+      "model": "name",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "性别",
+      "model": "gender",
+      "fieldType": "int",
+      "isForeignKey": 0
+    },
+    {
+      "name": "手机号",
+      "model": "phone",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "邮箱",
+      "model": "email",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "证件类型",
+      "model": "zhengjianType",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "证件号码",
+      "model": "zhengjian",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "生日",
+      "model": "birthday",
+      "fieldType": "datetime",
+      "isForeignKey": 0
+    },
+    {
+      "name": "学历",
+      "model": "edu",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "婚姻状况",
+      "model": "hunyin",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "家庭住址",
+      "model": "address",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "紧急联系人姓名",
+      "model": "lxrName",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "紧急联系人电话",
+      "model": "lxrPhone",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    },
+    {
+      "name": "与员工关系",
+      "model": "guanxi",
+      "fieldType": "varchar",
+      "isForeignKey": 0
+    }
+  ],
+  "success": true
+}

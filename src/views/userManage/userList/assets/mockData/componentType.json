@@ -1,0 +1,25 @@
+{
+  "input": {
+    "type": "input",
+    "name": "单行文本",
+    "icon": "icon-input",
+    "options": {
+      "width": "80%",
+      "defaultValue": "",
+      "required": false,
+      "dataType": "string",
+      "pattern": "",
+      "placeholder": "",
+      "disabled": false,
+      "isWfCondition": false
+    },
+    "key": "1608779149000_82150",
+    "model": "input_1608779149000_82150",
+    "rules": [
+      {
+        "type": "string",
+        "message": "单行文本格式不正确"
+      }
+    ]
+  }
+}
