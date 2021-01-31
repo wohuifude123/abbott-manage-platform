@@ -2,7 +2,7 @@
   <div>
     <el-select
             v-model="valueSelected"
-            placeholder="请选择"
+            placeholder="请选择方式"
             @change="selectEntity"
     >
       <el-option
@@ -64,7 +64,9 @@
       let paramsObj = {
         url, data, type
       }
-      _this.getServerData(paramsObj)
+      // _this.getServerData(paramsObj)
+
+      // _this.options
     },
     methods: {
       ...mapActions('form', [

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import user from './modules/user'
 import form from './modules/form'
+import app from './modules/app'
 import getters from './getters'
 
 Vue.use(Vuex);
@@ -15,7 +16,8 @@ export default new Vuex.Store({
   },
   modules:{
     user,
-    form
+    form,
+    app
   },
   getters
 })

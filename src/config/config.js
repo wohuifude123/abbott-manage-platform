@@ -18,7 +18,8 @@ export default {
    */
   baseUrl: {
     dev:'/reqJava',// 本地服务测试路径
-    pro: 'http://39.105.168.44:9091'
+    // pro: 'http://39.105.168.44:9091'
+    pro: '/reqJavaNinetyOne'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
@@ -32,5 +33,9 @@ export default {
       showInHeader: true, // 设为false后不会在顶部显示错误日志徽标
       developmentOff: true // 设为true后在开发环境不会收集错误信息，方便开发中排查错误
     }
+  },
+  publicUrl: {
+    houseDetail: 'http://www.xinlizhiyouni.com/mobile/house/detail.html',
+    editArticle: '/v1/technologyArticle/updateById'
   }
 }

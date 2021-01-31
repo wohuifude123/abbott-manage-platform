@@ -17,7 +17,7 @@ export default {
     ChartPie,
     ChartLineShadow,
     ChartBar
-  },
+  }
 }
 </script>
 

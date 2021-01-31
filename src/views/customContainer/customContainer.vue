@@ -69,7 +69,7 @@
         <!-- 右侧属性选择 -->
         <el-aside class="widget-config-container">
           <el-container>
-            <el-header height="45px">
+            <el-header class='widget-config-header' height="45px">
               <div class="config-tab" :class="{active: configTab=='widget'}" @click="handleConfigSelect('widget')">字段属性</div>
               <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">表单属性</div>
             </el-header>
@@ -131,8 +131,9 @@ export default {
       advanceComponents, // 左侧高级字段
       layoutComponents, // 左侧布局字段
       resetJson: false,
-      configTab: '',
-      isKeyUniqueComputed: true
+      isKeyUniqueComputed: true,
+      configTab: 'widget',
+      activeNames:1,
     }
   },
   mounted () {
@@ -211,5 +212,10 @@ export default {
     /*background: #00b4aa;*/
     font-size: 14px;
     color: #606266;
+  }
+
+  .widget-config-header {
+    /*background: #e6a23c;*/
+    display: flex;
   }
 </style>

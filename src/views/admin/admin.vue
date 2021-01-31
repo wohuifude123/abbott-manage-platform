@@ -1,132 +1,32 @@
 <template>
-  <el-container>
+  <el-container style="height: 100%">
     <!--<el-aside width="200px" style="background: #324157">-->
-    <div class="log-left-container">
-      <!--<div class='log-container'>ABBOTT管理系统</div>-->
-      <el-scrollbar
-              class="default-scroll-bar"
-      >
-        <el-menu
-                default-active="1"
-                class="el-menu-vertical-demo"
-                style="min-height:200px"
-                @select="handleSelect"
-                background-color="#324157"
-                text-color="#bfcbd9"
-                active-text-color="#20a0ff"
-                :unique-opened="true"
-                @open="handleOpen"
-                @close="handleClose"
-                :collapse="isCollapse"
-        >
-          <el-menu-item index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i><span>系统首页</span>
-            </template>
-          </el-menu-item>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-menu"></i>数据展示
-            </template>
-            <el-menu-item index="2-1">
-              <i class="el-icon-document"></i>数据展示
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-setting"></i>用户管理
-            </template>
-            <el-menu-item index="3-1">
-              <template slot="title">
-                <i class="el-icon-menu"></i>用户查询
-              </template>
-            </el-menu-item>
-            <el-menu-item index="3-2">
-              <template slot="title">
-                <i class="el-icon-menu"></i>用户增加
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-menu"></i>数据展示
-            </template>
-            <el-menu-item index="4-1"><i class="el-icon-menu"></i>任务列表</el-menu-item>
-          </el-submenu>
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-menu"></i>快捷操作
-            </template>
-            <el-menu-item index="5-1"><i class="el-icon-menu"></i>创建页面</el-menu-item>
-            <el-menu-item index="5-2"><i class="el-icon-menu"></i>拖拽功能</el-menu-item>
-          </el-submenu>
-
-          <el-submenu index="6">
-            <template slot="title">
-              <i class="el-icon-location"></i><span>技术分享</span>
-            </template>
-            <el-menu-item index="6-1">
-              <i class="el-icon-menu"></i><span>文章列表</span>
-            </el-menu-item>
-          </el-submenu>
-
-          <el-menu-item index="7">
-            <template slot="title">
-              <i class="el-icon-location"></i><span>文档</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="8">
-            <template slot="title">
-              <i class="el-icon-location"></i><span>外链</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="8">
-            <template slot="title">
-              <i class="el-icon-location"></i><span>外链</span>
-            </template>
-          </el-menu-item>
-          <!--<el-menu-item index="8">-->
-            <!--<template slot="title">-->
-              <!--<i class="el-icon-location"></i><span>外链</span>-->
-            <!--</template>-->
-          <!--</el-menu-item>-->
-          <!--<el-menu-item index="8">-->
-            <!--<template slot="title">-->
-              <!--<i class="el-icon-location"></i><span>外链</span>-->
-            <!--</template>-->
-          <!--</el-menu-item>-->
-          <!--<el-menu-item index="8">-->
-            <!--<template slot="title">-->
-              <!--<i class="el-icon-location"></i><span>外链</span>-->
-            <!--</template>-->
-          <!--</el-menu-item>-->
-          <!--<el-menu-item index="8">-->
-            <!--<template slot="title">-->
-              <!--<i class="el-icon-location"></i><span>外链</span>-->
-            <!--</template>-->
-          <!--</el-menu-item>-->
-        </el-menu>
-
-      </el-scrollbar>
-    <!--</el-aside>-->
-    </div>
-    <el-main class="admin-right-main-container">
+    <admin-menu
+            :isCollapse="isCollapse"
+            @addTopTag="addTopTag"
+    ></admin-menu>
+    <el-main
+            class="admin-right-main-container"
+            :class="{'admin-right-collapse': isCollapse, 'admin-right-spread': !isCollapse}">
       <el-header class="admin-right-title-container">
         <div class='admin-right-navigation' style="width:100%;overflow: hidden; height: 100%">
-          <span class="demonstration" style="float:left;padding-top:10px;color:white;margin-left:1%">
-            <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-              <el-radio-button :label="false">展开</el-radio-button>
+          <div class="admin-radio-group">
+            <el-radio-group
+                    size="small"
+                    v-model="isCollapse"
+            >
+              <el-radio-button :label="false" >展开</el-radio-button>
               <el-radio-button :label="true">收起</el-radio-button>
             </el-radio-group>
-          </span>
+          </div>
           <!--<span class="demonstration"-->
-                <!--style="float:left;padding:5px;color:white;margin-left:2%;width:15%">-->
-            <!--<el-input-->
-                    <!--placeholder="请输入"-->
-                    <!--icon="search"-->
-                    <!--v-model="searchCriteria"-->
-                    <!--:on-icon-click="handleIconClick">-->
-            <!--</el-input>-->
+          <!--style="float:left;padding:5px;color:white;margin-left:2%;width:15%">-->
+          <!--<el-input-->
+          <!--placeholder="请输入"-->
+          <!--icon="search"-->
+          <!--v-model="searchCriteria"-->
+          <!--:on-icon-click="handleIconClick">-->
+          <!--</el-input>-->
           <!--</span>-->
           <span class="user-operation-container" style="float:right;">
                 <el-dropdown trigger="click">
@@ -140,26 +40,90 @@
             </span>
         </div>
       </el-header>
-      <el-main style="padding:0">
-        <router-view></router-view>
+      <el-main class="main-content-container">
+        <!--<el-breadcrumb separator="/" class='breadcrumb-container'>-->
+        <!--<el-breadcrumb-item-->
+        <!--v-for="(item,index) in breadList"-->
+        <!--:key="index"-->
+        <!--:to="{ path: item.path }"-->
+        <!--&gt;{{item.meta.title}}</el-breadcrumb-item>-->
+        <!--</el-breadcrumb>-->
+        <div class='admin-tabs-container'>
+          <el-tabs
+                  v-model="pageTabCurrent"
+                  type="card" closable
+                  @tab-click='changeTab'
+                  @tab-remove="removeTab">
+            <el-tab-pane
+                    v-for="(item) in pageList"
+                    :key="item.name"
+                    :name="item.name"
+                    style="height: 30px"
+            >
+            <span slot="label">
+              <span>{{item.label}}</span>
+              <span class="refresh">
+                <i style="font-size:15px;" @click="refreshModule" class="el-icon-refresh" ></i>
+              </span>
+            </span>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+        <keep-alive :exclude="exclude">
+          <router-view></router-view>
+        </keep-alive>
       </el-main>
     </el-main>
   </el-container>
 </template>
 <script type="text/ecmascript-6">
-import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
+  import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
+import AdminMenu from './modules/adminMenu/adminMenu'
+
 export default {
   data() {
     return {
       searchCriteria: '',
       breadcrumbItems: ['导航一'],
       isCollapse: false,
-      usernameDefault: 'abbott.liu'
+      usernameDefault: 'abbott.liu',
+      breadList: [],
+      pageTabCurrent:'',
+      pageList: [
+        // {
+        //   name: "王子1",
+        //   label: "导航1"
+        // },
+        // {
+        //   name: "王子2",
+        //   label: "导航2"
+        // }
+      ],
+      exclude: null,
+      condition: true
     }
+  },
+  components: {
+    AdminMenu
   },
   watch: {
     user: val => {
       console.log('watch user val ======= ', val);
+    },
+    isCollapse: val => {
+      console.log('isCollapse == ', val)
+    },
+    // 面包屑
+    // $route() {
+    //   console.log("$route")
+    //   this.getBreadcrumb();
+    // }
+    $route: {
+      handler (to, form=null) {
+        //当路由改变时，检测该路由是否已经在打开的页面之中，如果不在，就添加进去
+        this.pageTabCurrent = to.path;
+      },
+      immediate: true
     }
   },
   computed: {
@@ -168,63 +132,20 @@ export default {
     })
   },
   mounted () {
-    let _this = this
+    const _this = this
     // console.log('admin state == ', _this.state)
     // window.addEventListener('scroll', _this.handleScroll)
-    console.log('username == ', JSON.stringify(_this.state.userInfo))
+    // console.log('username == ', JSON.stringify(_this.state.userInfo))
     if(_this.state.userInfo.hasOwnProperty('username')) {
       _this.usernameDefault = _this.state.userInfo.username
     } else {
-      console.log('username == 无')
+      // console.log('username == 无')
     }
+
+    // _this.getBreadcrumb();
+    _this.addTopTag()
   },
   methods: {
-    handleIconClick(ev) {
-      console.log(ev);
-    },
-    handleSelect(key, keyPath) {
-      switch(key){
-        case '1':
-          console.log('Page1 导航一')
-          this.$router.push('/index');
-          this.breadcrumbItems = ['导航一']
-          break;
-        case '2-1':
-          this.$router.push('/data_tmp')
-          this.breadcrumbItems = ['导航二']
-          break;
-        case '3-1':
-          this.$router.push('/user_list')
-          this.breadcrumbItems = ['用户查询']
-          break;
-        case '3-2':
-          this.$router.push('/user_add')
-          this.breadcrumbItems = ['用户增加']
-          break;
-        case '4-1':
-          this.$router.push('/task_list')
-          this.breadcrumbItems = ['导航三']
-          break;
-        case '5-1':
-          this.$router.push('/customContainer')
-          this.breadcrumbItems = ['导航三']
-          break;
-        case '5-2':
-          this.$router.push('/partDraggable')
-          this.breadcrumbItems = ['导航三']
-          break;
-        case '6-1':
-          this.$router.push('/article')
-          this.breadcrumbItems = ['导航三']
-          break;
-      }
-    },
-    handleOpen(key, keyPath) {
-      // console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      // console.log(key, keyPath);
-    },
     handleScroll() {
       console.log('handleScroll ')
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -239,6 +160,66 @@ export default {
     logoutUser () {
       console.log('登出')
       this.$router.push('/login')
+    },
+    isHome(route) {
+      console.log('isHome route == ', route)
+      return route.name === "Admin";
+    },
+    getBreadcrumb () {
+      let matched = this.$route.matched;
+      console.log('matched == ', matched)
+      //如果不是首页
+      if (!this.isHome(matched[0])) {
+        matched = [{ path: "/admin", meta: { title: "首页" } }].concat(matched);
+      }
+      this.breadList = matched;
+    },
+    addTopTag () {
+      const _this = this
+      let matched = _this.$route.matched
+      console.log('改变头部标签 changeTopTag matched == ', matched)
+      let arrPage = _this.pageList.map((item, index)=>{
+        return item.name
+      });
+      // console.log('arrPage == ', arrPage)
+      if(arrPage.indexOf(matched[1].path) === -1) {
+        let tagObj = {
+          name: matched[1].path,
+          label: matched[1].meta.title
+        }
+        _this.pageList.push(tagObj)
+      }
+    },
+    removeTab (targetName) {
+      let tabs = this.pageList;
+      let activeName = this.pageTabCurrent;
+      if (activeName === targetName) {
+        tabs.forEach((tab, index) => {
+          if (tab.name === targetName) {
+            let nextTab = tabs[index + 1] || tabs[index - 1];
+            if (nextTab) {
+              activeName = nextTab.name;
+            }
+          }
+        });
+      };
+      this.pageTabCurrent = activeName;
+      this.pageList = tabs.filter(tab => tab.name !== targetName);
+      this.$router.push({path:activeName})
+    },
+    changeTab (tab, event){
+      const _this = this
+      _this.$router.push({
+        path: tab.name
+      })
+    },
+    refreshModule () {
+      // this.exclude = this.$refs.view.$options.name;
+      // this.condition = !this.condition
+      // this.$nextTick(_ => {
+      //   this.exclude = null
+      //   this.condition = !this.condition
+      // })
     }
   },
 }
@@ -252,13 +233,6 @@ export default {
     /*background: blue;*/
     padding-right: 50px;
     overflow: hidden;
-  }
-
-  .log-left-container {
-    height:100%;
-    width:210px;
-    position: fixed;
-    background: #324157;
   }
 
   .admin-right-navigation {
@@ -292,12 +266,34 @@ export default {
   }
   .admin-right-main-container {
     box-sizing: border-box;
+    background: #f0f2f5;
+  }
+  .admin-right-collapse {
+    padding: 0 0 0 60px;
+  }
+
+  .admin-right-spread {
     padding: 0 0 0 210px;
   }
+
   .admin-right-title-container {
     padding: 0;
     /*height: 50px!important;*/
   }
+
+  .admin-radio-group {
+    float:left;
+    /*padding-top:10px;*/
+    color:white;
+    /*margin-left:1%;*/
+    /*background: #F56C6C;*/
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+
   .log-container {
     height: 60px;
     display: flex;
@@ -324,5 +320,51 @@ export default {
       font-size: 16px;
       font-weight: 500;
     }
+  }
+
+  .main-content-container {
+    /*background: fuchsia;*/
+    /*height: 100%*/
+    background: #f0f2f5;
+    padding: 0;
+  }
+
+  .breadcrumb-container {
+    height: 30px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    background: rgb(240, 242, 245);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ACACAC;
+  }
+
+  .admin-tabs-container {
+    height: 40px;
+
+  }
+  .el-tabs__nav-wrap {
+    background: #D9E0E9;
+  }
+
+  .el-tabs__item {
+    padding: 0 20px;
+    height: 40px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 40px;
+    display: inline-block;
+    list-style: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+    position: relative;
+    border-right: 1px solid #ffffff;
+  }
+
+  .el-tabs--card>.el-tabs__header {
+    border-bottom: 1px solid #E4E7ED;
+    background-color: #ffffff; //修改背景色
+    margin: 0;
   }
 </style>

@@ -64,9 +64,14 @@ export function validEmail(email) {
   return reg.test(email)
 }
 
-export function isvalidPhone(phone) {
-  const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+export function isValidPhone(phone) {
+  const reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/
   return reg.test(phone)
+}
+
+export function validateURL(textval) {
+  const urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
+  return urlregex.test(textval)
 }
 
 /**

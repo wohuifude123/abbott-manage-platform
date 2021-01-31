@@ -1,0 +1,269 @@
+{
+  "type": "grid",
+  "showType": "grid",
+  "name": "我做的子表格",
+  "model": "grid_1610536081000_15999",
+  "formType": null,
+  "foreignKey": null,
+  "editMode": null,
+  "key": "1610536081000_15999",
+  "icon": "icon-table",
+  "attrList": [],
+  "sysGridFieldList": [
+    {
+      "columnAttrList": [],
+      "showType": "input",
+      "attrList": [],
+      "sysEventList": [],
+      "sysRule": {},
+      "dataSourceType": null,
+      "dataSource": null,
+      "name": null,
+      "model": null
+    }
+  ],
+  "attrObject": {
+    ":height": "",
+    ":span-method": "",
+    ":load": "",
+    ":default-sort": "",
+    ":fit": "true",
+    ":row-class-name": "",
+    ":lazy": "",
+    ":border": "false",
+    ":header-cell-class-name": "",
+    ":summary-method": "",
+    "tooltip-effect": "",
+    ":tree-props": "",
+    ":row-style": "",
+    ":select-on-indeterminate": "true",
+    ":row-key": "",
+    ":expand-row-keys": "",
+    ":max-height": "",
+    ":cell-style": "",
+    ":highlight-current-row": "false",
+    ":header-cell-style": "",
+    ":header-row-class-name": "",
+    "empty-text": "",
+    "size": "",
+    ":show-header": "true",
+    ":current-row-key": "",
+    ":indent": "16",
+    ":default-expand-all": "false",
+    ":show-summary": "false",
+    ":stripe": "false",
+    "sum-text": "合计"
+  },
+  "sysAttrList": [
+    {
+      "defaultValue": "",
+      "description": "Table的高度，默认为自动高度。如果height为number类型，单位px；如果height为string类型，则这个高度会设置为Table的style.height的值，Table的高度会受控于外部样式。",
+      "type": 1,
+      "value": "",
+      "key": ":height"
+    },
+    {
+      "defaultValue": "",
+      "description": "Table的最大高度。合法的值为数字或者单位为px的高度。",
+      "type": 1,
+      "value": "",
+      "key": ":max-height"
+    },
+    {
+      "defaultValue": "false",
+      "description": "是否为斑马纹table",
+      "type": 0,
+      "value": "false",
+      "key": ":stripe"
+    },
+    {
+      "defaultValue": "false",
+      "description": "是否带有纵向边框",
+      "type": 0,
+      "value": "false",
+      "key": ":border"
+    },
+    {
+      "defaultValue": "",
+      "description": "Table的尺寸,可选值:medium/small/mini",
+      "type": 1,
+      "value": "",
+      "key": "size"
+    },
+    {
+      "defaultValue": "true",
+      "description": "列的宽度是否自撑开",
+      "type": 0,
+      "value": "true",
+      "key": ":fit"
+    },
+    {
+      "defaultValue": "true",
+      "description": "是否显示表头",
+      "type": 0,
+      "value": "true",
+      "key": ":show-header"
+    },
+    {
+      "defaultValue": "false",
+      "description": "是否要高亮当前行",
+      "type": 0,
+      "value": "false",
+      "key": ":highlight-current-row"
+    },
+    {
+      "defaultValue": "",
+      "description": "当前行的key，只写属性",
+      "type": 1,
+      "value": "",
+      "key": ":current-row-key"
+    },
+    {
+      "defaultValue": "",
+      "description": "行的className的回调方法，也可以使用字符串为所有行设置一个固定的className。",
+      "type": 1,
+      "value": "",
+      "key": ":row-class-name"
+    },
+    {
+      "defaultValue": "",
+      "description": "行的style的回调方法，也可以使用一个固定的Object为所有行设置一样的Style。",
+      "type": 1,
+      "value": "",
+      "key": ":row-style"
+    },
+    {
+      "defaultValue": "",
+      "description": "单元格的style的回调方法，也可以使用一个固定的Object为所有单元格设置一样的Style。",
+      "type": 1,
+      "value": "",
+      "key": ":cell-style"
+    },
+    {
+      "defaultValue": "",
+      "description": "表头行的className的回调方法，也可以使用字符串为所有表头行设置一个固定的className。",
+      "type": 1,
+      "value": "",
+      "key": ":header-row-class-name"
+    },
+    {
+      "defaultValue": "",
+      "description": "表头单元格的className的回调方法，也可以使用字符串为所有表头单元格设置一个固定的className。",
+      "type": 1,
+      "value": "",
+      "key": ":header-cell-class-name"
+    },
+    {
+      "defaultValue": "",
+      "description": "表头单元格的style的回调方法，也可以使用一个固定的Object为所有表头单元格设置一样的Style。",
+      "type": 1,
+      "value": "",
+      "key": ":header-cell-style"
+    },
+    {
+      "defaultValue": "",
+      "description": "行数据的Key，用来优化Table的渲染；在使用reserve-selection功能与显示树形数据时，该属性是必填的。类型为String时，支持多层访问：user.info.id，但不支持user.info[0].id，此种情况请使用Function。",
+      "type": 1,
+      "value": "",
+      "key": ":row-key"
+    },
+    {
+      "defaultValue": "",
+      "description": "空数据时显示的文本内容",
+      "type": 1,
+      "value": "",
+      "key": "empty-text"
+    },
+    {
+      "defaultValue": "false",
+      "description": "是否默认展开所有行，当Table包含展开行存在或者为树形表格时有效",
+      "type": 0,
+      "value": "false",
+      "key": ":default-expand-all"
+    },
+    {
+      "defaultValue": "",
+      "description": "可以通过该属性设置Table目前的展开行，需要设置row-key属性才能使用，该属性为展开行的keys数组。",
+      "type": 1,
+      "value": "",
+      "key": ":expand-row-keys"
+    },
+    {
+      "defaultValue": "",
+      "description": "默认的排序列的prop和顺序。它的prop属性指定默认的排序的列，order指定默认排序的顺序",
+      "type": 1,
+      "value": "",
+      "key": ":default-sort"
+    },
+    {
+      "defaultValue": "",
+      "description": "tooltipeffect属性;可选值:dark/light",
+      "type": 1,
+      "value": "",
+      "key": "tooltip-effect"
+    },
+    {
+      "defaultValue": "false",
+      "description": "是否表尾显示合计行",
+      "type": 0,
+      "value": "false",
+      "key": ":show-summary"
+    },
+    {
+      "defaultValue": "合计",
+      "description": "合计行第一列的文本",
+      "type": 1,
+      "value": "合计",
+      "key": "sum-text"
+    },
+    {
+      "defaultValue": "",
+      "description": "自定义的合计计算方法",
+      "type": 1,
+      "value": "",
+      "key": ":summary-method"
+    },
+    {
+      "defaultValue": "",
+      "description": "合并行或列的计算方法",
+      "type": 1,
+      "value": "",
+      "key": ":span-method"
+    },
+    {
+      "defaultValue": "true",
+      "description": "在多选表格中，当仅有部分行被选中时，点击表头的多选框时的行为。若为true，则选中所有行；若为false，则取消选择所有行",
+      "type": 0,
+      "value": "true",
+      "key": ":select-on-indeterminate"
+    },
+    {
+      "defaultValue": "16",
+      "description": "展示树形数据时,树节点的缩进",
+      "type": 1,
+      "value": "16",
+      "key": ":indent"
+    },
+    {
+      "defaultValue": "",
+      "description": "是否懒加载子节点数据",
+      "type": 0,
+      "value": "",
+      "key": ":lazy"
+    },
+    {
+      "defaultValue": "",
+      "description": "加载子节点数据的函数，lazy为true时生效，函数第二个参数包含了节点的层级信息",
+      "type": 1,
+      "value": "",
+      "key": ":load"
+    },
+    {
+      "defaultValue": "",
+      "description": "渲染嵌套数据的配置选项",
+      "type": 1,
+      "value": "",
+      "key": ":tree-props"
+    }
+  ]
+}

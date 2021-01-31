@@ -14,13 +14,14 @@ const addErrorLog = errorInfo => {
     mes: statusText,
     url: responseURL
   }
-  if (!responseURL.includes('save_error_logger')) store.dispatch('addErrorLog', info)
+  // if (!responseURL.includes('save_error_logger')) store.dispatch('addErrorLog', info)
 }
 
 class HttpRequest {
   constructor (baseUrl = baseURL) {
     this.baseUrl = baseUrl
     this.queue = {}
+    this.timeout = 5 * 1000
   }
   getInsideConfig () {
     const config = {
@@ -37,19 +38,24 @@ class HttpRequest {
     }
   }
   interceptors (instance, url) {
+    // console.log('interceptors instance url == ', url)
     // 请求拦截
     instance.interceptors.request.use(config => {
+      // console.log('interceptors request config == ', config)
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
         // Spin.show() // 不建议开启，因为界面不友好
       }
       this.queue[url] = true
+      // console.log('interceptors length == ', Object.keys(this.queue).length)
       return config
     }, error => {
+      // console.log('interceptors request error == ', error)
       return Promise.reject(error)
     })
     // 响应拦截
     instance.interceptors.response.use(res => {
+      // console.log('interceptors res == ', res)
       this.destroy(url)
       const {
         data,
@@ -60,7 +66,7 @@ class HttpRequest {
           data,
           status
         }
-      }else if(res.data.code === '605'){
+      } else if(res.data.code === '605'){
         router.replace('/605')
         let msg = res.data.msg
         if (msg) {
@@ -84,6 +90,7 @@ class HttpRequest {
         }
       }
     }, error => {
+      // console.log('interceptors error.response', error.response)
       this.destroy(url)
       let errorInfo = error.response
 
@@ -104,7 +111,8 @@ class HttpRequest {
         }
       }
       addErrorLog(errorInfo)
-      return Promise.reject(error)
+      // return Promise.reject(error)
+      return Promise.reject(error.response)
     })
   }
   request (options) {
@@ -112,7 +120,7 @@ class HttpRequest {
     options = Object.assign(this.getInsideConfig(), options)
     // console.log('this.baseUrl == ', this.baseUrl)
     // console.log('options == ', options)
-    // this.interceptors(instance, options.url)
+    this.interceptors(instance, options.url)
     return instance(options)
   }
 }

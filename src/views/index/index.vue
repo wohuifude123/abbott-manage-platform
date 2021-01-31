@@ -5,15 +5,17 @@
             <panel-group @handleSetLineChartData="handleSetLineChartData" />
             <chart-line></chart-line>
             <chart-group></chart-group>
+            <data-group></data-group>
         </div>
     </div>
 </template>
-background-color: #f0f2f5;
+
 <script>
 import GithubCorner from '@/components/GithubCorner/GithubCorner'
-import PanelGroup from './components/PanelGroup'
+import PanelGroup from './modules/PanelGroup'
 import ChartLine from './components/ChartLine'
 import ChartGroup from './modules/ChartGroup'
+import DataGroup from './modules/DataGroup'
 
 export default {
     name: "index",
@@ -21,7 +23,8 @@ export default {
         GithubCorner,
         PanelGroup,
         ChartGroup,
-        ChartLine
+        ChartLine,
+        DataGroup
     },
     data() {
         return {
@@ -43,7 +46,7 @@ export default {
     .dashboard-container {
         /*background-color: #f0f2f5;*/
         /*padding: 32px;*/
-        background-color: rgb(240, 242, 245);
+        background: rgb(240, 242, 245);
         position: relative;
         .dashboard-editor-container {
             box-sizing: border-box;

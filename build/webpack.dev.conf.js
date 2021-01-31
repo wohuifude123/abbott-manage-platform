@@ -45,6 +45,13 @@ let resultMerge = merge( base.baseConfig, {
                 pathRewrite: {
                     '^/reqJava': ''
                 }
+            },
+            '/reqNode': {
+                target: 'http://39.106.161.34:3060',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/reqNode': ''
+                }
             }
         }
     },

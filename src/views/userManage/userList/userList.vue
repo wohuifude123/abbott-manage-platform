@@ -1,5 +1,5 @@
 <template>
-  <el-container style="padding:0">
+  <el-container style="padding:0;background: rgb(240, 242, 245);">
     <el-header class="user-table-header-container">
       <!--<div class="user-table-header-title">-->
         <!--选择实体-->
@@ -7,16 +7,20 @@
       <div class="user-table-header-search-container">
         <div class='user-table-header-input'>
           <div style="display: flex;">
-            <span class='user-input-description'>实体code：</span>
+            <!--<span class='user-input-description'>实体code：</span>-->
+            <el-tag style="height: 40px;display: flex;align-items: center;font-size: 12px">实体code</el-tag>
             <el-input style="width: 200px" v-model="codeValue" placeholder="请输入内容"></el-input>
           </div>
           <div style="display: flex;margin-left: 20px">
-            <span class='user-input-description'>实体描述：</span>
+            <!--<span class='user-input-description'>实体描述：</span>-->
+            <el-tag style="height: 40px;display: flex;align-items: center;font-size: 12px">实体描述</el-tag>
             <el-input style="width: 200px" v-model="codeDescriptionValue" placeholder="请输入内容"></el-input>
           </div>
           <div class='entity-button-container'>
-            <el-button type="primary">搜索</el-button>
-            <el-button type="success">重置</el-button>
+            <el-radio-group v-model="radioEntity" style="width: 200px">
+              <el-radio-button label="0">搜索</el-radio-button>
+              <el-radio-button label="1">重置</el-radio-button>
+            </el-radio-group>
           </div>
         </div>
         <table-select></table-select>
@@ -30,6 +34,11 @@
               style="width: 100%"
               @selection-change="handleSelectionChange"
               border
+              highlight-current-row
+              id="table-key"
+
+              :row-key="(row)=>row.id.value"
+              default-expand-all
       >
         <el-table-column v-if="userData.length !== 0" type="selection"></el-table-column>
         <el-table-column
@@ -73,312 +82,332 @@
               :page-size="100"
               :page-sizes="[10, 20, 30, 50]"
               layout="total, prev, pager, next, sizes, jumper"
-              :total="400">
+              :total="500">
       </el-pagination>
     </el-footer>
   </el-container>
 </template>
 
 <script>
-  import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
-  import TableSelect from './components/tableSelect'
-  import UsersData from './assets/mockData/users'
-  import ComponentType from './assets/mockData/componentType'
-  export default {
-    name: "userList",
-    components: {
-      TableSelect
-    },
-    watch: {
-      getNameEntityTable (val) {
-        let _this = this
-        console.log('watch getNameEntityTable val == ', val)
-        // _this.isShowEntityTable = val
-        // let url = 'http://123.56.242.13:1314/sysTableController/getFieldList'
-        let url = 'http://81.70.209.44:1314/sysTableController/getFieldList'
+import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
+import TableSelect from './components/tableSelect'
+import UsersData from './assets/mockData/users'
+import ComponentType from './assets/mockData/componentType'
+import Sortable from 'sortablejs';
 
-        let data = {
-          "tableName":val
-        }
-        let type = 'list'
-
-        let paramsObj = {
-          url, data, type
-        }
-        _this.getServerData(paramsObj)
-      }
-    },
-    computed: {
-      ...mapState('form', {
-        state: state => state
-      }),
-      getNameEntityTable () {
-        let _this = this
-        console.log('computed getNameEntityTable val == ')
-        return _this.state.nameEntityTable;
-      }
-    },
-    data() {
-      return {
-        userData: [],
-        cols: [],
-        formModel: {
-        },
-        currentPage: 1,
-        tablesInfo: {
-
-        },
-        isShowTable: true,
-        codeValue: '',
-        codeDescriptionValue: ''
-      }
-    },
-    mounted () {
+export default {
+  name: "userList",
+  components: {
+    TableSelect
+  },
+  watch: {
+    getNameEntityTable (val) {
       let _this = this
-      // let url = '/test/home/other'
-      // let data = {
-      //   "code": "abc",
-      //   "id": "123322"
-      // }
+      console.log('watch getNameEntityTable val == ', val)
+      // _this.isShowEntityTable = val
+      // let url = 'http://123.56.242.13:1314/sysTableController/getFieldList'
+      let url = 'http://81.70.209.44:1314/sysTableController/getFieldList'
 
-      console.log('userList mounted userData == ', UsersData)
-      _this.userData = UsersData.list
-      _this.cols = UsersData.cols
-
-      let url = 'http://123.56.242.13:1314/sysTableController/getEntityList'
       let data = {
-        "notIncludeList":[],
-        "pageNo":1,
-        "pageSize":10,
-        "searchContent":"",
-        "description":""
+        "tableName":val
       }
-      let type = 'select'
+      let type = 'list'
 
       let paramsObj = {
         url, data, type
       }
-      _this.getServerData(paramsObj)
+      // _this.getServerData(paramsObj)
     },
-    methods: {
-      ...mapActions('form', [
-        'actionsReduceCount',
-        'actionsAddCount',
-        'actionsChangeFormSelect',
-        'actionsChangeEntityFlag',
-        'actionsChangeEntityName',
-      ]),
-      ...mapGetters('form', [
-        'getterCount'
-      ]),
-      formatSex: function (row, column, cellValue, index) {
-        return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+    radioEntity (val) {
+      console.log('radioEntity val == ', val)
+    }
+  },
+  computed: {
+    ...mapState('form', {
+      state: state => state
+    }),
+    getNameEntityTable () {
+      let _this = this
+      console.log('computed getNameEntityTable val == ')
+      return _this.state.nameEntityTable;
+    }
+  },
+  data() {
+    return {
+      userData: [],
+      cols: [],
+      formModel: {
       },
-      //状态改成汉字
-      formatterColumn(row, column) {
-        switch(row.IsAudit){
-          case 0:
-            return '未通过';
-            break;
-          case 1:
-            return '审核通过';
-            break;
-          case 10:
-            return '待审核';
-            break;
-          case 9:
-            return '草稿';
-            break;
-          default:
-            return '未知';
-        }
-      },
-      handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-      },
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },
-      handleSelectionChange(val) {
-        let _this = this
-        // console.log('change val == ', val)
-        _this.multipleSelection = val;
-        _this.handleRowData(val)
-      },
-      selectEntity (val) {
-        let _this = this
-        console.log('selectEntity == ', val)
-        _this['actionsChangeEntityName'](val)
-        // let url = 'http://123.56.242.13:1314/sysTableController/getFieldList'
-        let url = 'http://81.70.209.44:1314/sysTableController/getFieldList'
-        let data = {
-          "tableName":val
-        }
-        let type = 'list'
-        let paramsObj = {
-          url, data, type
-        }
-       this.isShowTable = false
-        _this.getServerData(paramsObj)
+      currentPage: 1,
+      tablesInfo: {
 
       },
-      getServerData (data) {
-        let _this = this
-        let dataReq = data;
-        _this.$http.post(`${dataReq.url}`,dataReq.data)
-            .then(res=>{
-              console.log('res=>',res);
-              _this.handleResData(dataReq.type, res)
-            })
-      },
-      handleResData (type, data) {
-        let _this = this
-        console.log('type == ', type)
-        if (type === 'select') {
-          let options = []
-          // console.log(data.data.data.data)
-          data.data.data.data.map((item, index)=>{
-            let option = {
-              value: item['tableName'],
-              label: item['tableDesc']
-            }
-            options[index] = option
-          })
-          _this.options = options
-        } else if (type === 'list') {
-          let userData = []
-          let cols = []
-          // console.log('list data == ', data)
-          let userDataNew = []
-          let columnType = new Map([
-            ['fieldType', 'input'],
-            ['name', 'input']
-          ])
-          userDataNew = data.data.data.map((item, index)=>{
-            let itemNew = _this.deepClone(item)
-            // console.log('list item == ', item)
-            // list item ==  {name: "开始时间", model: "beginTime", fieldType: "datetime", isForeignKey: 0}
-            let objItemTable = {}
-            for(let keyItemTable in item) {
-              let objTypeItemTable = 'text'
-              if (columnType.get(keyItemTable) !== undefined) {
-                objTypeItemTable = columnType.get(keyItemTable)
-              }
-              objItemTable[keyItemTable] =  {
-                "type": objTypeItemTable,
-                "value": item[keyItemTable]
-              }
-              objItemTable['rowType'] = {
-                "type": "select",
-                "value": "input",
-                "label": "文本输入框",
-                "options": [
-                  {
-                    "value": "input",
-                    "label": "文本输入框"
-                  },
-                  {
-                    "value": "number",
-                    "label": "数字输入框"
-                  },
-                  {
-                    "value": "date",
-                    "label": "日期框"
-                  }
-                ]
-              }
-            }
-            // userData[index] = itemNew
-            console.log('objItemTable == ', objItemTable)
+      isShowTable: true,
+      codeValue: '',
+      codeDescriptionValue: '',
+      radioEntity: 0
+    }
+  },
+  mounted () {
+    let _this = this
+    // let url = '/test/home/other'
+    // let data = {
+    //   "code": "abc",
+    //   "id": "123322"
+    // }
 
-            if(index === 0) {
-              for(let key in objItemTable) {
-                let objKey = {
-                  prop: key,
-                  label: key.toString(),
-                  width: 55
-                }
-                cols.push(objKey)
-              }
-            }
+    console.log('userList mounted userData == ', UsersData)
+    _this.userData = UsersData.list
+    _this.cols = UsersData.cols
 
-            return objItemTable
-          })
-          // console.log('userData == ', userData)
+    let url = 'http://123.56.242.13:1314/sysTableController/getEntityList'
+    let data = {
+      "notIncludeList":[],
+      "pageNo":1,
+      "pageSize":10,
+      "searchContent":"",
+      "description":""
+    }
+    let type = 'select'
 
+    let paramsObj = {
+      url, data, type
+    }
+    // _this.getServerData(paramsObj)
 
-          console.log('cols == ', cols)
+    _this.rowDrop()
 
-          _this.cols = cols
-          console.log('objItemTable userDataNew == ', userDataNew)
-          _this.userData = userDataNew
-
-        }
-      },
-      deepClone(target) {
-        // 定义一个变量
-        let _this = this
-        let result;
-        // 如果当前需要深拷贝的是一个对象的话
-        if (typeof target === 'object') {
-          // 如果是一个数组的话
-          if (Array.isArray(target)) {
-            result = []; // 将result赋值为一个数组，并且执行遍历
-            for (let i in target) {
-              // 递归克隆数组中的每一项
-              result.push(_this.deepClone(target[i]))
-            }
-            // 判断如果当前的值是null的话；直接赋值为null
-          } else if(target===null) {
-            result = null;
-            // 判断如果当前的值是一个RegExp对象的话，直接赋值
-          } else if(target.constructor===RegExp){
-            result = target;
-          }else {
-            // 否则是普通对象，直接for in循环，递归赋值对象的所有值
-            result = {};
-            for (let i in target) {
-              result[i] = _this.deepClone(target[i]);
-            }
-          }
-          // 如果不是对象的话，就是基本数据类型，那么直接赋值
-        } else {
-          result = target;
-        }
-        // 返回最终结果
-        return result;
-      },
-      handleRowData (val) {
-        let _this = this
-        // console.log('handleRowData val == ', val)
-        let columnsArr = []
-        val.map((item, index) => {
-          // console.log('item == ', item)
-          // console.log('value == ', item['IsAudit']['value'])
-          // console.log( ComponentTypea[item['IsAudit']['value']] )
-          if(ComponentType[item['IsAudit']['value']] !== undefined) {
-            columnsArr[index] = ComponentType[item['IsAudit']['value']]
-          }
-        })
-        console.log('columnsArr == ', columnsArr)
-      },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+  },
+  methods: {
+    ...mapActions('form', [
+      'actionsReduceCount',
+      'actionsAddCount',
+      'actionsChangeFormSelect',
+      'actionsChangeEntityFlag',
+      'actionsChangeEntityName',
+    ]),
+    ...mapGetters('form', [
+      'getterCount'
+    ]),
+    formatSex: function (row, column, cellValue, index) {
+      return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+    },
+    //状态改成汉字
+    formatterColumn(row, column) {
+      switch(row.IsAudit){
+        case 0:
+          return '未通过';
+          break;
+        case 1:
+          return '审核通过';
+          break;
+        case 10:
+          return '待审核';
+          break;
+        case 9:
+          return '草稿';
+          break;
+        default:
+          return '未知';
       }
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+    handleSelectionChange(val) {
+      let _this = this
+      // console.log('change val == ', val)
+      _this.multipleSelection = val;
+      _this.handleRowData(val)
+    },
+    selectEntity (val) {
+      let _this = this
+      console.log('selectEntity == ', val)
+      _this['actionsChangeEntityName'](val)
+      // let url = 'http://123.56.242.13:1314/sysTableController/getFieldList'
+      let url = 'http://81.70.209.44:1314/sysTableController/getFieldList'
+      let data = {
+        "tableName":val
+      }
+      let type = 'list'
+      let paramsObj = {
+        url, data, type
+      }
+     this.isShowTable = false
+      _this.getServerData(paramsObj)
+
+    },
+    getServerData (data) {
+      let _this = this
+      let dataReq = data;
+      _this.$http.post(`${dataReq.url}`,dataReq.data)
+          .then(res=>{
+            console.log('res=>',res);
+            _this.handleResData(dataReq.type, res)
+          })
+    },
+    handleResData (type, data) {
+      let _this = this
+      console.log('type == ', type)
+      if (type === 'select') {
+        let options = []
+        // console.log(data.data.data.data)
+        data.data.data.data.map((item, index)=>{
+          let option = {
+            value: item['tableName'],
+            label: item['tableDesc']
+          }
+          options[index] = option
+        })
+        _this.options = options
+      } else if (type === 'list') {
+        let userData = []
+        let cols = []
+        // console.log('list data == ', data)
+        let userDataNew = []
+        let columnType = new Map([
+          ['fieldType', 'input'],
+          ['name', 'input']
+        ])
+        userDataNew = data.data.data.map((item, index)=>{
+          let itemNew = _this.deepClone(item)
+          // console.log('list item == ', item)
+          // list item ==  {name: "开始时间", model: "beginTime", fieldType: "datetime", isForeignKey: 0}
+          let objItemTable = {}
+          for(let keyItemTable in item) {
+            let objTypeItemTable = 'text'
+            if (columnType.get(keyItemTable) !== undefined) {
+              objTypeItemTable = columnType.get(keyItemTable)
+            }
+            objItemTable[keyItemTable] =  {
+              "type": objTypeItemTable,
+              "value": item[keyItemTable]
+            }
+            objItemTable['rowType'] = {
+              "type": "select",
+              "value": "input",
+              "label": "文本输入框",
+              "options": [
+                {
+                  "value": "input",
+                  "label": "文本输入框"
+                },
+                {
+                  "value": "number",
+                  "label": "数字输入框"
+                },
+                {
+                  "value": "date",
+                  "label": "日期框"
+                }
+              ]
+            }
+          }
+          // userData[index] = itemNew
+          console.log('objItemTable == ', objItemTable)
+
+          if(index === 0) {
+            for(let key in objItemTable) {
+              let objKey = {
+                prop: key,
+                label: key.toString(),
+                width: 55
+              }
+              cols.push(objKey)
+            }
+          }
+
+          return objItemTable
+        })
+        // console.log('userData == ', userData)
+
+
+        console.log('cols == ', cols)
+
+        _this.cols = cols
+        console.log('objItemTable userDataNew == ', userDataNew)
+        _this.userData = userDataNew
+
+      }
+    },
+    deepClone(target) {
+      // 定义一个变量
+      let _this = this
+      let result;
+      // 如果当前需要深拷贝的是一个对象的话
+      if (typeof target === 'object') {
+        // 如果是一个数组的话
+        if (Array.isArray(target)) {
+          result = []; // 将result赋值为一个数组，并且执行遍历
+          for (let i in target) {
+            // 递归克隆数组中的每一项
+            result.push(_this.deepClone(target[i]))
+          }
+          // 判断如果当前的值是null的话；直接赋值为null
+        } else if(target===null) {
+          result = null;
+          // 判断如果当前的值是一个RegExp对象的话，直接赋值
+        } else if(target.constructor===RegExp){
+          result = target;
+        }else {
+          // 否则是普通对象，直接for in循环，递归赋值对象的所有值
+          result = {};
+          for (let i in target) {
+            result[i] = _this.deepClone(target[i]);
+          }
+        }
+        // 如果不是对象的话，就是基本数据类型，那么直接赋值
+      } else {
+        result = target;
+      }
+      // 返回最终结果
+      return result;
+    },
+    handleRowData (val) {
+      let _this = this
+      // console.log('handleRowData val == ', val)
+      let columnsArr = []
+      val.map((item, index) => {
+        // console.log('item == ', item)
+        // console.log('value == ', item['IsAudit']['value'])
+        // console.log( ComponentTypea[item['IsAudit']['value']] )
+        if(ComponentType[item['IsAudit']['value']] !== undefined) {
+          columnsArr[index] = ComponentType[item['IsAudit']['value']]
+        }
+      })
+      console.log('columnsArr == ', columnsArr)
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    //行拖拽
+    rowDrop() {
+      const tbody = document.querySelector('.el-table__body-wrapper tbody')
+      const _this = this
+      Sortable.create(tbody, {
+        onEnd({ newIndex, oldIndex }) {
+          const currRow = _this.userData.splice(oldIndex, 1)[0]
+          _this.userData.splice(newIndex, 0, currRow)
+        }
+      })
     }
   }
+}
 </script>
 
 <style scoped>
@@ -386,7 +415,7 @@
     /*display: flex;*/
     /*justify-content: space-between;*/
     /*align-items: center;*/
-    height: 80px !important;
+    /*height: 80px !important;*/
   }
 
   .user-table-header-title {
@@ -407,6 +436,7 @@
   }
   .user-table-header-container {
     padding: 0 10px 0 10px;
+    height: 40px;
   }
   .user-table-header-input {
     width: 200px;
@@ -433,7 +463,9 @@
   }
 
   .entity-button-container {
-    display: flex;
+    /*display: flex;*/
     margin-left: 20px;
+    /*background: #333333;*/
+    width: 150px;
   }
 </style>

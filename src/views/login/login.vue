@@ -1,16 +1,17 @@
 <template>
-  <div class="login" :style="'background-image:url('+ Background +');'">
+  <!--<div class="login" :style="'background-image:url('+ Background +');'">-->
+  <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-position="left" label-width="0px" class="login-form">
       <h3 class="title">
         ABBOTT 后台管理系统
       </h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+        <el-input v-model.trim="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleLogin">
+        <el-input v-model.trim="loginForm.password" type="password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
@@ -106,16 +107,30 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', {
-      state: state => state
+    ...mapState({
+      user: state=>state.user,
+      app: state=>state.app
     })
   },
   mounted () {
-
+    const _this = this
+    let imgBackground = new Image()
+    imgBackground.src = Background;
+    imgBackground.onreadystatechange = function() {
+      console.log('onreadystatechange imgBackground.readyState == ', imgBackground.readyState)
+      if(imgBackground.readyState==="complete"||imgBackground.readyState==="loaded"){
+        console.log('背景图加载完')
+        // p1.innerHTML = 'readystatechange:loaded'
+      }
+    }
   },
   methods: {
     ...mapActions('user', [
       'actionsChangeUserInfo'
+    ]),
+    ...mapActions('app', [
+      'actionsChangeAppDataGlobal',
+      'actionsChangeUserDataGlobal'
     ]),
     ...mapGetters('user', [
       'getterCount'
@@ -149,20 +164,41 @@ export default {
             }
           } else {
             let url = '/reqJava/user/v1/login'
-
             let dataReq = {
               "username": user['username'],
               "password": user['password']
             }
 
             // console.log('login dataReq ==', dataReq)
-            getLogin(dataReq).then(res=>{
-              // console.log(res)
+            // getLogin(dataReq).then(res=>{
+            //   _this.handleResData(res)
+            // }, err=>{
+            //   _this.$message({
+            //     message: err,
+            //     type:'error',
+            //     duration: '5000'
+            //   })
+            // })
+
+            /**
+             * 200 - 请求成功
+             * 301 - 资源（网页等）被永久转移到其它URL
+             * 404 - 请求的资源（网页等）不存在
+             * 500 - 内部服务器错误（如：网络无法连接）
+             */
+            getLogin(dataReq).then( res=>{
+              // console.log('getLogin res == ', res)
               _this.handleResData(res)
-              // console.log(res.data)
-            },err=>{
-              console.log(err)
+            }).catch( err =>{
+              console.log('getLogin err == ', err)
+              _this.$message({
+                message: err.status + ' - ' + err.statusText,
+                type:'error',
+                duration: '3000'
+              })
+              _this.loginMode = 'tourist'
             })
+
           }
 
         } else {
@@ -190,12 +226,15 @@ export default {
     },
     handleResData (dataRes) {
       let _this = this
-      // console.log(dataRes.data)
+      console.log(dataRes)
       if( dataRes.data.code === '0001' ) {
         let userInfoState = {};
-        userInfoState = dataRes.data.result.data
+        // userInfoState = dataRes.data.data.data
+        userInfoState = dataRes.data.data
         // console.log('userInfoState == ', userInfoState)
-        _this['actionsChangeUserInfo'](userInfoState)
+        _this['actionsChangeUserInfo'](userInfoState.data)
+        _this['actionsChangeAppDataGlobal'](userInfoState.data)
+        _this['actionsChangeUserDataGlobal'](userInfoState)
         _this.$router.push('/admin')
       } else {
         _this.$message({
@@ -220,6 +259,7 @@ export default {
     align-items: center;
     height: 100%;
     background-size: cover;
+    background: linear-gradient(to right,#9D0006, #9D1751, #3D266D);
   }
   .title {
     margin: 0 auto 30px auto;
