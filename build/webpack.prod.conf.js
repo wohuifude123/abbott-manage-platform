@@ -10,6 +10,7 @@ const base = require('./webpack.base.conf.js');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const fs = require("fs");
 
@@ -33,8 +34,28 @@ function resolve(dir) {
 module.exports = merge( base.baseConfig, {
     output: {
         filename: '[name].bundle_[chunkhash:8].js',
+        chunkFilename: '[id].[chunkhash:8].js',
         // path: path.resolve( __dirname, '../public' )
         path: path.resolve( __dirname, '../dist' )
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    name: 'vendor',
+                    test: /[\\/]node_modules[\\/]/, //在node_modules范围内进行匹配
+                    priority: 10, //优先级，先抽离公共的第三方库，再抽离业务代码，值越大优先级越高
+                    chunks: 'all',
+                    enforce: true
+                },
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/, // 将公共css抽离出来
+                    chunks: 'all',
+                    enforce: true
+                }
+            }
+        }
     },
     plugins: [
         // new VueLoaderPlugin(),
@@ -44,6 +65,9 @@ module.exports = merge( base.baseConfig, {
         //     filename: path.resolve( __dirname, 'public/home.html' ),
         //     chunks: ['home']
         // }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+        }),
         new webpack.DefinePlugin({
             'process.env': env
         }),
